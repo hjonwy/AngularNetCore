@@ -30,8 +30,16 @@ namespace AngularCore31
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            IdentityBuilder identityBuilder = services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+
+            });
+            identityBuilder.AddEntityFrameworkStores<ApplicationDbContext>();
+            identityBuilder.AddDefaultUI();
+            identityBuilder.AddDefaultTokenProviders();
+
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
