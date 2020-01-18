@@ -16,11 +16,19 @@ namespace AngularCore31
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            IHostBuilder hostBuiler = Host.CreateDefaultBuilder(args);
+            hostBuiler.ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+            hostBuiler.ConfigureLogging((ctx, logging)=>{
+                logging.AddLog4Net();
+                logging.SetMinimumLevel(LogLevel.Debug);
+            });
+            
+            return hostBuiler;
+        }
     }
 }

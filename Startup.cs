@@ -11,6 +11,7 @@ using AngularCore31.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AngularCore31
 {
@@ -56,8 +57,10 @@ namespace AngularCore31
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            logger.LogInformation("Enter Configure, is develop: {0}", env.IsDevelopment());
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
