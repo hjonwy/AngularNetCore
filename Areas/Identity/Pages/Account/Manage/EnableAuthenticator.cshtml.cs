@@ -124,8 +124,8 @@ namespace AngularCore31.Areas.Identity.Pages.Account.Manage
 
             SharedKey = FormatKey(unformattedKey);
 
-            var email = await _userManager.GetEmailAsync(user);
-            AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey);
+            //var email = await _userManager.GetEmailAsync(user);
+            AuthenticatorUri = GenerateQrCodeUri(user.UserName, unformattedKey);
         }
 
         private string FormatKey(string unformattedKey)
