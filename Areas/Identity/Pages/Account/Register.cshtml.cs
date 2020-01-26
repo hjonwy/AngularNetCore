@@ -38,6 +38,7 @@ namespace AngularCore31.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            Roles = new List<string>(){"Admin", "Service", "Manager"};
         }
 
         [BindProperty]
@@ -46,6 +47,8 @@ namespace AngularCore31.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        public List<string> Roles {get;}
 
         public class InputModel
         {
@@ -77,7 +80,6 @@ namespace AngularCore31.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            ViewData["Roles"] = new List<string>(){"Admin", "Service", "Manager"};
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

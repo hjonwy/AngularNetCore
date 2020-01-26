@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label asp-for="Input.Role"></label>
                 <select asp-for="Input.Role" class="form-control" >
-                    @foreach (var role in ViewBag.Roles)
+                    @foreach (var role in Model.Roles)
                     {
                         <option value="@role">@role</option>
                     }
