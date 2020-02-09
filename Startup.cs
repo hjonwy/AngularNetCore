@@ -47,8 +47,19 @@ namespace AngularCore31
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-            services.AddControllersWithViews();
+            
+            services.AddLocalization(options => {
+                options.ResourcesPath = "Resources";
+                });
+
+            services.AddControllersWithViews()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(options => {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>factory.Create(typeof(SharedResource));
+                });
+
             services.AddRazorPages();
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

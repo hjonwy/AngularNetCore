@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Localization;
 
 namespace AngularCore31.Controllers
 {
@@ -19,10 +20,12 @@ namespace AngularCore31.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private IStringLocalizer<SharedResource> _localizer;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IStringLocalizer<SharedResource> localizer)
         {
             _logger = logger;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -33,9 +36,8 @@ namespace AngularCore31.Controllers
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                Summary = _localizer[Summaries[rng.Next(Summaries.Length)]]
+            }).ToArray();
         }
     }
 }

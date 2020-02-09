@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -43,12 +44,13 @@ namespace AngularCore31.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage="The UserName field is required.")]
             [DataType(DataType.Text)]
             public string UserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage="The Password field is required.")]
             [DataType(DataType.Password)]
+            [Display(Name="Password")]
             public string Password { get; set; }
 
             [Display(Name = "Remember me?")]
@@ -57,6 +59,9 @@ namespace AngularCore31.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            var uicultrure = Thread.CurrentThread.CurrentUICulture;
+            var culture = Thread.CurrentThread.CurrentCulture;
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
