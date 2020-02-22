@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace AngularCore31.Areas.Identity.Pages.Account
 {
@@ -22,14 +26,17 @@ namespace AngularCore31.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IOptions<RequestLocalizationOptions> _locOptions;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager, 
+            IOptions<RequestLocalizationOptions> locOptions )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _locOptions = locOptions;
         }
 
         [BindProperty]
@@ -46,6 +53,7 @@ namespace AngularCore31.Areas.Identity.Pages.Account
         {
             [Required(ErrorMessage="The UserName field is required.")]
             [DataType(DataType.Text)]
+            [Display(Name="UserName")]
             public string UserName { get; set; }
 
             [Required(ErrorMessage="The Password field is required.")]
@@ -59,8 +67,11 @@ namespace AngularCore31.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            var uicultrure = Thread.CurrentThread.CurrentUICulture;
-            var culture = Thread.CurrentThread.CurrentCulture;
+            var curCul = CultureInfo.CurrentCulture;
+            var curUICul = CultureInfo.CurrentUICulture;
+
+            //var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+            var cultureItems = _locOptions.Value.SupportedUICultures;
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
