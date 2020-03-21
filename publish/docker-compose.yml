@@ -7,6 +7,8 @@ services:
             - "8188:80"
         depends_on:
             - db
+        volumes: 
+            - ".\\log:/var/log/"
     db:
         image: "mcr.microsoft.com/mssql/server"
         environment:
@@ -15,6 +17,7 @@ services:
             MSSQL_PID: "Express"
         ports:
             - "14334:1433"
-
+        volumes:
+            - ".\\data:/var/opt/mssql/data/"
             
             
