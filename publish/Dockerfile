@@ -3,4 +3,6 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY . .
-ENTRYPOINT ["dotnet", "AngularCore31.dll"]
+#ENTRYPOINT ["dotnet", "AngularCore31.dll"]
+RUN chmod +x ./entrypoint.sh
+CMD /bin/bash ./entrypoint.sh

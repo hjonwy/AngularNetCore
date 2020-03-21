@@ -1,0 +1,20 @@
+
+version: "3.7"
+services:
+    web:
+        build: .
+        ports:
+            - "8188:80"
+        depends_on:
+            - db
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Abc_123@johnhu"
+            ACCEPT_EULA: "Y"
+            MSSQL_PID: "Express"
+        ports:
+            - "14334:1433"
+
+            
+            
