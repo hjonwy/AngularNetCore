@@ -16,6 +16,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.DataProtection;
 using System.Security.Cryptography.X509Certificates;
+using Pomelo.EntityFrameworkCore.MySql;
 using System.IO;
 
 namespace AngularCore31
@@ -37,7 +38,7 @@ namespace AngularCore31
                 .ProtectKeysWithCertificate(new X509Certificate2("./wwwroot/AngularCore31.pfx", "Abc 123"));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)

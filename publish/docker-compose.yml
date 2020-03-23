@@ -8,16 +8,14 @@ services:
         depends_on:
             - db
         volumes: 
-            - ".\\log:/var/log/"
+            - "/var/log:/var/log/"
     db:
-        image: "mcr.microsoft.com/mssql/server"
+        image: "mysql"
         environment:
-            SA_PASSWORD: "Abc_123@johnhu"
-            ACCEPT_EULA: "Y"
-            MSSQL_PID: "Express"
+            MYSQL_ROOT_PASSWORD: "Abc_123@johnhu"
         ports:
-            - "14334:1433"
+            - "3306:3306"
         volumes:
-            - ".\\data:/var/opt/mssql/data/"
+            - "/var/lib/mysql/:/var/lib/mysql/"
             
             
